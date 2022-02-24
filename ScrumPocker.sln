@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrumPocker.API", "ScrumPocker.API\ScrumPocker.API.csproj", "{6ADDDA80-CFDA-4AB0-A4D2-AB67901AC2DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumPocker.Services", "ScrumPocker.Services\ScrumPocker.Services.csproj", "{DC067FAA-D7D5-4715-95F4-083A32230996}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrumPocker.Core", "ScrumPocker.Core\ScrumPocker.Core.csproj", "{588309E7-4F48-4549-A32B-CF80DDEAF39D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6ADDDA80-CFDA-4AB0-A4D2-AB67901AC2DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ADDDA80-CFDA-4AB0-A4D2-AB67901AC2DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ADDDA80-CFDA-4AB0-A4D2-AB67901AC2DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ADDDA80-CFDA-4AB0-A4D2-AB67901AC2DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC067FAA-D7D5-4715-95F4-083A32230996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC067FAA-D7D5-4715-95F4-083A32230996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC067FAA-D7D5-4715-95F4-083A32230996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC067FAA-D7D5-4715-95F4-083A32230996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{588309E7-4F48-4549-A32B-CF80DDEAF39D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{588309E7-4F48-4549-A32B-CF80DDEAF39D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{588309E7-4F48-4549-A32B-CF80DDEAF39D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{588309E7-4F48-4549-A32B-CF80DDEAF39D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {346359D9-C156-44F3-A0DA-82D78D47DCF1}
+	EndGlobalSection
+EndGlobal
