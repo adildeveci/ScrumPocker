@@ -33,7 +33,7 @@ on:
 
 env:
   AWS_REGION: us-east-1                     # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: scrumpocker                 # set this to your Amazon ECR repository name
+  ECR_REPOSITORY: public.ecr.aws/h7r3o3y4/scrumpocker                 # set this to your Amazon ECR repository name
   ECS_SERVICE: ecs1                            # set this to your Amazon ECS service name
   ECS_CLUSTER: cluster1                          # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: first-run-task-definition:1 # set this to the path to your Amazon ECS task definition
