@@ -6,7 +6,7 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-WORKDIR /src
+WORKDIR /
 COPY ["ScrumPocker.API/ScrumPocker.API.csproj", "ScrumPocker.API/"]
 COPY ["ScrumPocker.Core/ScrumPocker.Core.csproj", "ScrumPocker.Core/"]
 COPY ["ScrumPocker.Services/ScrumPocker.Services.csproj", "ScrumPocker.Services/"]
