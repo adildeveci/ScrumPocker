@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +37,13 @@ namespace ScrumPocker.API
 
             services.AddControllers();
             services.AddHealthChecks();
+
+            services.AddControllers().AddFluentValidation(optipons =>
+            {
+                optipons.RegisterValidatorsFromAssemblyContaining<Startup>();
+            });
+            services.UseCustomValidationResponse();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ScrumPocker.API", Version = "v1" });
