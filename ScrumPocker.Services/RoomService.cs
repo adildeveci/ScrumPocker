@@ -9,33 +9,35 @@ namespace ScrumPocker.Services
 {
     public interface IRoomService
     {
-        BaseResponse<Room> CreateRoom(CreateRoomDto roomDto);
+        BaseResponse<Room> CreateRoom(CreateRoomDto request);
         BaseResponse<List<Room>> GetRooms();
         BaseResponse JoinRoom(JoinRoomDto request);
+        BaseResponse LeaveRoom(LeaveRoomDto request);
+        BaseResponse DeleteRoom(DeleteRoomDto request);
     }
     public class RoomService : IRoomService
     {
-        public BaseResponse<Room> CreateRoom(CreateRoomDto roomDto)
+        public BaseResponse<Room> CreateRoom(CreateRoomDto request)
         {
-            var createdUser = StaticDbContext.Users.FirstOrDefault(x => x.Id == roomDto.CreatedUserId);
-            if (createdUser == null)
-                return BaseResponse<Room>.Fail("Oda oluşturmak isteyen kullanıcının bilgileri bulunamadı");
+            var user = StaticDbContext.Users.FirstOrDefault(x => x.Id == request.UserId);
+            if (user == null)
+                return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
 
             //TODO: auto mapper kullan
             var room = new Room
             {
-                Name = roomDto.Name,
-                IsPublic = roomDto.IsPublic,
-                HourExpireIn = roomDto.HourExpireIn,
-                Password = roomDto.Password,
-                Voiting = roomDto.Voiting,
+                Name = request.Name,
+                IsPublic = request.IsPublic,
+                HourExpireIn = request.HourExpireIn,
+                Password = request.Password,
+                Voiting = request.Voiting,
+                CreatedUserId = user.Id
             };
-            room.Users.Add(createdUser);
+            room.Users.Add(user);
 
             StaticDbContext.Rooms.Add(room);
             return BaseResponse<Room>.Success(room);
         }
-
         public BaseResponse<List<Room>> GetRooms()
         {
             var data = StaticDbContext.Rooms;
@@ -43,11 +45,59 @@ namespace ScrumPocker.Services
         }
         public BaseResponse JoinRoom(JoinRoomDto request)
         {
+            var user = StaticDbContext.Users.FirstOrDefault(x => x.Id == request.UserId);
+            if (user == null)
+                return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
+
             var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Guid == request.RoomGuid);
             if (room == null)
                 return BaseResponse.Fail("Giriş yapılmak istenen oda bulunamadı", 404);
 
-            return null;
+            if (room.Users.Any(x => x.Id == user.Id))
+                return BaseResponse.Success();//zaten odada
+
+            room.Users.Add(user);
+            return BaseResponse.Success();
+        }
+        public BaseResponse LeaveRoom(LeaveRoomDto request)
+        {
+            var user = StaticDbContext.Users.FirstOrDefault(x => x.Id == request.UserId);
+            if (user == null)
+                return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
+
+            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Guid == request.RoomGuid);
+            if (room == null)
+                return BaseResponse.Fail("Oda bulunamadı", 404);
+
+            if (!room.Users.Any(x => x.Id == user.Id))
+                return BaseResponse.Fail("Kullanıcı odada değil");
+
+            if (room.Users.Remove(user))
+            {
+                return BaseResponse.Success();
+            }
+            else
+            {
+                return BaseResponse.Fail("Çıkış yapılamadı");
+            }
+        }
+        public BaseResponse DeleteRoom(DeleteRoomDto request)
+        {
+            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Guid == request.RoomGuid);
+            if (room == null)
+                return BaseResponse.Fail("Oda bulunamadı", 404);
+
+            if (room.CreatedUserId != request.UserId)
+                return BaseResponse.Fail("Odayı sadece oluşturan kişi silebilir", 403);
+
+            if (StaticDbContext.Rooms.Remove(room))
+            {
+                return BaseResponse.Success();
+            }
+            else
+            {
+                return BaseResponse.Fail("Oda silinemedi");
+            }
         }
     }
 }

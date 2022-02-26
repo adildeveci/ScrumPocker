@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ScrumPocker.Core.Configuration;
+using ScrumPocker.Core.Constants;
 using ScrumPocker.Core.Dto.Token;
 using ScrumPocker.Core.Extensions;
 using ScrumPocker.Core.Models;
@@ -124,7 +125,7 @@ namespace ScrumPocker.Services
             };
             StaticDbContext.Users.Add(user);//refresh token alabilmek icin simdilik ekledik sonradan ayristirilabilir
 
-            var token = GenerateUserToken(user);  
+            var token = GenerateUserToken(user);
             StaticDbContext.UserRefreshTokens.Add(new UserRefreshToken { UserId = user.Id, RefreshToken = token.RefreshToken, RefreshTokenExpiration = token.RefreshTokenExpiration });
 
             return BaseResponse<TokenDto>.Success(token);
@@ -178,11 +179,11 @@ namespace ScrumPocker.Services
 
             return tokenDto;
         }
-        private string GenerateRefreshToken() 
+        private string GenerateRefreshToken()
         {
-            var numberByte = new Byte[32]; 
-            using var rnd = RandomNumberGenerator.Create(); 
-            rnd.GetBytes(numberByte); 
+            var numberByte = new Byte[32];
+            using var rnd = RandomNumberGenerator.Create();
+            rnd.GetBytes(numberByte);
             return Convert.ToBase64String(numberByte);
         }
         private IEnumerable<Claim> GetClaimsByUser(UserModel user)

@@ -1,4 +1,5 @@
 ﻿
+using ScrumPocker.Core.Constants;
 using ScrumPocker.Core.Dto.User;
 using ScrumPocker.Core.Models;
 using ScrumPocker.Core.Models.BaseResponse;
@@ -12,7 +13,7 @@ namespace ScrumPocker.Services
     {
         BaseResponse<UserModel> CreateUser(CreateUserDto userDto);
     }
-    public class UserService: IUserService
+    public class UserService : IUserService
     {
         public BaseResponse<UserModel> CreateUser(CreateUserDto userDto)
         {
@@ -26,7 +27,7 @@ namespace ScrumPocker.Services
                 Name = userDto.Name,
                 SurName = userDto.SurName,
                 PasswordHash = userDto.Password,//TODO: hash'li halini kaydet 
-                Role=Role.User
+                Role = Role.User
             };
             StaticDbContext.Users.Add(user);
             return BaseResponse<UserModel>.Success(user);

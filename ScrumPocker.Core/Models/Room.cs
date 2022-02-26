@@ -26,6 +26,7 @@ namespace ScrumPocker.Core.Models
         public int HourExpireIn { get; set; }
         public bool IsPublic { get; set; }
         public string Password { get; set; }
+        public string CreatedUserId { get; set; }
         public List<UserModel> Users { get; set; }
         public Voting Voiting { get; set; }
     }
