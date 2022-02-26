@@ -10,41 +10,36 @@ namespace ScrumPocker.Services
 {
     public interface IRoomService
     {
-        BaseResponse<Room> CreateRoom(CreateRoomDto request);
-        BaseResponse<List<Room>> GetRooms();
+        BaseResponse<RoomSummaryDto> CreateRoom(CreateRoomDto request);
+        BaseResponse<List<RoomSummaryDto>> GetRooms();
         BaseResponse JoinRoom(JoinRoomDto request);
         BaseResponse LeaveRoom(LeaveRoomDto request);
         BaseResponse DeleteRoom(DeleteRoomDto request);
     }
     public class RoomService : IRoomService
     {
-        public BaseResponse<Room> CreateRoom(CreateRoomDto request)
+        public BaseResponse<RoomSummaryDto> CreateRoom(CreateRoomDto request)
         {
             var user = StaticDbContext.Users.FirstOrDefault(x => x.Id == request.UserId);
             if (user == null)
-                return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
+                return BaseResponse<RoomSummaryDto>.Fail("Kullanıcı bulunamadı", 404);
 
             var room = ObjectMapper.Mapper.Map<Room>(request);
-            //TODO: auto mapper kullan
-            //var room = new Room
-            //{
-            //    Name = request.Name,
-            //    IsPublic = request.IsPublic,
-            //    HourExpireIn = request.HourExpireIn,
-            //    Voiting = request.Voiting,
-            //};
 
             room.PasswordHash = request.IsPublic ? null : Hashing.HashSHA512(request.Password);
             room.CreatedUserId = user.Id;
             room.Users.Add(user);
 
             StaticDbContext.Rooms.Add(room);
-            return BaseResponse<Room>.Success(room);
+
+            var result = ObjectMapper.Mapper.Map<RoomSummaryDto>(room);
+            return BaseResponse<RoomSummaryDto>.Success(result);
         }
-        public BaseResponse<List<Room>> GetRooms()
+        public BaseResponse<List<RoomSummaryDto>> GetRooms()
         {
-            var data = StaticDbContext.Rooms;
-            return BaseResponse<List<Room>>.Success(data);
+            var rooms = StaticDbContext.Rooms;
+            var result = ObjectMapper.Mapper.Map<List<RoomSummaryDto>>(rooms);
+            return BaseResponse<List<RoomSummaryDto>>.Success(result);
         }
         public BaseResponse JoinRoom(JoinRoomDto request)
         {

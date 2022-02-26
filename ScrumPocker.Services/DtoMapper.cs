@@ -8,7 +8,8 @@ namespace ScrumPocker.Services
     {
         public DtoMapper()
         {
-            CreateMap<CreateRoomDto, Room>().ReverseMap(); 
+            CreateMap<CreateRoomDto, Room>().ReverseMap();
+            CreateMap<Room, RoomSummaryDto>().ReverseMap();
         }
     }
 }

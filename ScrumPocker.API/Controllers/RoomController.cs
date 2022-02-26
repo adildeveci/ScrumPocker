@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ScrumPocker.Core.Constants;
 using ScrumPocker.Core.Dto.Room;
-using ScrumPocker.Core.Models;
 using ScrumPocker.Core.Models.BaseResponse;
 using ScrumPocker.Services;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace ScrumPocker.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<BaseResponse<List<Room>>>> GetRooms()
+        public async Task<ActionResult<BaseResponse<List<RoomSummaryDto>>>> GetRooms()
         {
             var response = _roomService.GetRooms();
             return ActionResultBase(response);
@@ -30,7 +29,7 @@ namespace ScrumPocker.API.Controllers
 
         [HttpPost]
         [Authorize(Roles = RoleCombination.LoggedUserRoles)]
-        public async Task<ActionResult<BaseResponse<Room>>> CreateRoom([FromBody] CreateRoomDto request)
+        public async Task<ActionResult<BaseResponse<RoomSummaryDto>>> CreateRoom([FromBody] CreateRoomDto request)
         {
             request.UserId = GetCurrentUserId();
 
