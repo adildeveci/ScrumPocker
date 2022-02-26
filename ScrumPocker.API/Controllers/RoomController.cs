@@ -37,7 +37,7 @@ namespace ScrumPocker.API.Controllers
             return ActionResultBase(response);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Authorize(Roles = RoleCombination.LoggedUserRoles)]
         public async Task<ActionResult<BaseResponse>> JoinRoom([FromBody] JoinRoomDto request)
         {
@@ -46,6 +46,7 @@ namespace ScrumPocker.API.Controllers
             var response = _roomService.JoinRoom(request);
             return ActionResultBase(response);
         }
+
         [HttpPost]
         [Authorize(Roles = RoleCombination.LoggedUserRoles)]
         public async Task<ActionResult<BaseResponse>> LeaveRoom([FromBody] LeaveRoomDto request)
@@ -55,6 +56,7 @@ namespace ScrumPocker.API.Controllers
             var response = _roomService.LeaveRoom(request);
             return ActionResultBase(response);
         }
+
         [HttpDelete]
         [Authorize(Roles = RoleCombination.LoggedUserRoles)]
         public async Task<ActionResult<BaseResponse>> DeleteRoom([FromBody] DeleteRoomDto request)
