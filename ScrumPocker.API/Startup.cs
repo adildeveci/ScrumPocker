@@ -85,6 +85,7 @@ namespace ScrumPocker.API
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScrumPocker.API v1"));
 
+            app.UseCustomException();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseHealthChecks("/hc");
