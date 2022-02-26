@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ScrumPocker.Core.Constants;
+using ScrumPocker.Core.Dto.Voting;
 using ScrumPocker.Core.Models;
 using ScrumPocker.Core.Models.BaseResponse;
 using ScrumPocker.Services;
@@ -19,9 +21,19 @@ namespace ScrumPocker.API.Controllers
             _votingService = votingService;
         }
         [HttpGet]
-        public async Task<ActionResult<BaseResponse<List<Voting>>>> GetDefaultVoting()
+        public async Task<ActionResult<BaseResponse<List<VotingDefinition>>>> GetVotingDefinitions()
         {
-            var response = _votingService.GetDefaultVoting();
+            var response = _votingService.GetVotingDefinitions();
+            return ActionResultBase(response);
+        }
+
+        [HttpPut]
+        [Authorize(Roles = RoleCombination.LoggedUserRoles)]
+        public async Task<ActionResult<BaseResponse>> Vote([FromBody] VoteRequestDto request)
+        {
+            request.UserId = GetCurrentUserId();
+
+            var response = _votingService.Vote(request);
             return ActionResultBase(response);
         }
     }

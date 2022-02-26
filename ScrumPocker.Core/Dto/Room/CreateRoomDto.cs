@@ -13,6 +13,6 @@ namespace ScrumPocker.Core.Dto.Room
         public bool IsPublic { get; set; }
         public int HourExpireIn { get; set; }
         public string Password { get; set; }
-        public Voting Voiting { get; set; }
+        public VotingDefinition VotingDefinition { get; set; }
     }
 }

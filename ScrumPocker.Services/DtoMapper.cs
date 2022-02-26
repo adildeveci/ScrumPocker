@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ScrumPocker.Core.Dto.Room;
+using ScrumPocker.Core.Dto.Voting;
 using ScrumPocker.Core.Models;
 
 namespace ScrumPocker.Services
@@ -10,6 +11,7 @@ namespace ScrumPocker.Services
         {
             CreateMap<CreateRoomDto, Room>().ReverseMap();
             CreateMap<Room, RoomSummaryDto>().ReverseMap();
+            CreateMap<VoteRequestDto, VoteMoel>().ReverseMap(); 
         }
     }
 }

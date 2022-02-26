@@ -2,9 +2,9 @@
 
 namespace ScrumPocker.Core.Models
 {
-    public class Voting
+    public class VotingDefinition
     {
-        public Voting()
+        public VotingDefinition()
         {
             Values = new List<string>();
         }

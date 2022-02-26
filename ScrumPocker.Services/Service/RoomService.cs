@@ -47,9 +47,9 @@ namespace ScrumPocker.Services
             if (user == null)
                 return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
 
-            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Guid == request.RoomGuid);
+            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Id == request.RoomId);
             if (room == null)
-                return BaseResponse.Fail("Giriş yapılmak istenen oda bulunamadı", 404);
+                return BaseResponse.Fail("Oda bulunamadı", 404);
 
             if (room.Users.Any(x => x.Id == user.Id))
                 return BaseResponse.Success();//zaten odada
@@ -66,7 +66,7 @@ namespace ScrumPocker.Services
             if (user == null)
                 return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
 
-            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Guid == request.RoomGuid);
+            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Id == request.RoomId);
             if (room == null)
                 return BaseResponse.Fail("Oda bulunamadı", 404);
 
@@ -84,7 +84,7 @@ namespace ScrumPocker.Services
         }
         public BaseResponse DeleteRoom(DeleteRoomDto request)
         {
-            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Guid == request.RoomGuid);
+            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Id == request.RoomId);
             if (room == null)
                 return BaseResponse.Fail("Oda bulunamadı", 404);
 
