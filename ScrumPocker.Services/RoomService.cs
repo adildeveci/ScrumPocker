@@ -1,4 +1,5 @@
 ﻿using ScrumPocker.Core.Dto.Room;
+using ScrumPocker.Core.Helpers;
 using ScrumPocker.Core.Models;
 using ScrumPocker.Core.Models.BaseResponse;
 using ScrumPocker.Core.StaticDb;
@@ -29,7 +30,7 @@ namespace ScrumPocker.Services
                 Name = request.Name,
                 IsPublic = request.IsPublic,
                 HourExpireIn = request.HourExpireIn,
-                Password = request.Password,
+                PasswordHash = request.IsPublic ? null : Hashing.HashSHA512(request.Password),
                 Voiting = request.Voiting,
                 CreatedUserId = user.Id
             };
@@ -55,6 +56,9 @@ namespace ScrumPocker.Services
 
             if (room.Users.Any(x => x.Id == user.Id))
                 return BaseResponse.Success();//zaten odada
+            
+            if (!room.IsPublic && room.CreatedUserId != user.Id && !Hashing.CheckHashSHA512(request.RoomPassword, room.PasswordHash))//oda herkese acik degilse kurucu haricindekilere password dogrula
+                return BaseResponse.Fail("Oda şifresinini yanlış girdiniz");
 
             room.Users.Add(user);
             return BaseResponse.Success();
