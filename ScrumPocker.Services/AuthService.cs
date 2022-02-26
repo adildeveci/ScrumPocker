@@ -94,7 +94,7 @@ namespace ScrumPocker.Services
         {
             if (loginDto == null) throw new ArgumentNullException(nameof(loginDto));
 
-            var user = StaticDbContext.Users.FirstOrDefault(x => x.Email.Equals(loginDto.Email));//TODO: password to hashPassword
+            var user = StaticDbContext.Users.FirstOrDefault(x => x.Email.Equals(loginDto.Email));
             if (user == null)
                 return BaseResponse<TokenDto>.Fail("Email or Password is wrong");
 
