@@ -1,6 +1,7 @@
 ﻿
 using ScrumPocker.Core.Constants;
 using ScrumPocker.Core.Dto.User;
+using ScrumPocker.Core.Helpers;
 using ScrumPocker.Core.Models;
 using ScrumPocker.Core.Models.BaseResponse;
 using ScrumPocker.Core.StaticDb;
@@ -26,11 +27,12 @@ namespace ScrumPocker.Services
                 Email = userDto.Email,
                 Name = userDto.Name,
                 SurName = userDto.SurName,
-                PasswordHash = userDto.Password,//TODO: hash'li halini kaydet 
+                PasswordHash = Hashing.HashSHA512(userDto.Password),//TODO: hash'li halini kaydet 
                 Role = Role.User
             };
             StaticDbContext.Users.Add(user);
             return BaseResponse<UserModel>.Success(user);
         }
+     
     }
 }

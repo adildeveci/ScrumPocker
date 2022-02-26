@@ -5,6 +5,7 @@ using ScrumPocker.Core.Configuration;
 using ScrumPocker.Core.Constants;
 using ScrumPocker.Core.Dto.Token;
 using ScrumPocker.Core.Extensions;
+using ScrumPocker.Core.Helpers;
 using ScrumPocker.Core.Models;
 using ScrumPocker.Core.Models.BaseResponse;
 using ScrumPocker.Core.StaticDb;
@@ -93,8 +94,11 @@ namespace ScrumPocker.Services
         {
             if (loginDto == null) throw new ArgumentNullException(nameof(loginDto));
 
-            var user = StaticDbContext.Users.FirstOrDefault(x => x.Email.Equals(loginDto.Email) && x.PasswordHash == loginDto.Password);//TODO: password to hashPassword
+            var user = StaticDbContext.Users.FirstOrDefault(x => x.Email.Equals(loginDto.Email));//TODO: password to hashPassword
             if (user == null)
+                return BaseResponse<TokenDto>.Fail("Email or Password is wrong");
+
+            if (!Hashing.CheckHashSHA512(loginDto.Password, user.PasswordHash))
                 return BaseResponse<TokenDto>.Fail("Email or Password is wrong");
 
             var token = GenerateUserToken(user);
