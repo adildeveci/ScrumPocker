@@ -27,12 +27,12 @@ namespace ScrumPocker.Services
                 Email = userDto.Email,
                 Name = userDto.Name,
                 SurName = userDto.SurName,
-                PasswordHash = Hashing.HashSHA512(userDto.Password),//TODO: hash'li halini kaydet 
+                PasswordHash = Hashing.HashSHA512(userDto.Password),
                 Role = Role.User
             };
             StaticDbContext.Users.Add(user);
             return BaseResponse<UserModel>.Success(user);
         }
-     
+
     }
 }

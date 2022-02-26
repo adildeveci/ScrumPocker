@@ -24,16 +24,18 @@ namespace ScrumPocker.Services
             if (user == null)
                 return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
 
+            var room = ObjectMapper.Mapper.Map<Room>(request);
             //TODO: auto mapper kullan
-            var room = new Room
-            {
-                Name = request.Name,
-                IsPublic = request.IsPublic,
-                HourExpireIn = request.HourExpireIn,
-                PasswordHash = request.IsPublic ? null : Hashing.HashSHA512(request.Password),
-                Voiting = request.Voiting,
-                CreatedUserId = user.Id
-            };
+            //var room = new Room
+            //{
+            //    Name = request.Name,
+            //    IsPublic = request.IsPublic,
+            //    HourExpireIn = request.HourExpireIn,
+            //    Voiting = request.Voiting,
+            //};
+
+            room.PasswordHash = request.IsPublic ? null : Hashing.HashSHA512(request.Password);
+            room.CreatedUserId = user.Id;
             room.Users.Add(user);
 
             StaticDbContext.Rooms.Add(room);
@@ -56,7 +58,7 @@ namespace ScrumPocker.Services
 
             if (room.Users.Any(x => x.Id == user.Id))
                 return BaseResponse.Success();//zaten odada
-            
+
             if (!room.IsPublic && room.CreatedUserId != user.Id && !Hashing.CheckHashSHA512(request.RoomPassword, room.PasswordHash))//oda herkese acik degilse kurucu haricindekilere password dogrula
                 return BaseResponse.Fail("Oda şifresinini yanlış girdiniz");
 
