@@ -11,6 +11,8 @@ namespace ScrumPocker.Services
     {
         BaseResponse<List<VotingDefinition>> GetVotingDefinitions();
         BaseResponse Vote(VoteRequestDto request);
+        BaseResponse RevealCard(RevealCardRequestDto request);
+        BaseResponse StartNewVoting(StartNewVotingRequestDto request);
     }
 
     public class VotingService : IVotingService
@@ -68,6 +70,49 @@ namespace ScrumPocker.Services
                 var model = ObjectMapper.Mapper.Map<VoteMoel>(request);
                 room.Votes.Add(model);
             } 
+
+            return BaseResponse.Success();
+        }
+
+        public BaseResponse RevealCard(RevealCardRequestDto request)
+        {
+            var user = StaticDbContext.Users.FirstOrDefault(x => x.Id == request.UserId);
+            if (user == null)
+                return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
+
+            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Id == request.RoomId);
+            if (room == null)
+                return BaseResponse.Fail("Oda bulunamadı", 404);
+
+            if (!room.Users.Any(x => x.Id == user.Id))
+                return BaseResponse.Fail("Kullanıcı odada değil");
+
+            if (!room.Votes.Any())
+                return BaseResponse.Fail("Henüz puan verilmemiş");
+
+            room.WasRevealed = true;
+
+            return BaseResponse.Success();
+        }
+
+        public BaseResponse StartNewVoting(StartNewVotingRequestDto request)
+        {
+            var user = StaticDbContext.Users.FirstOrDefault(x => x.Id == request.UserId);
+            if (user == null)
+                return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
+
+            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Id == request.RoomId);
+            if (room == null)
+                return BaseResponse.Fail("Oda bulunamadı", 404);
+
+            if (!room.Users.Any(x => x.Id == user.Id))
+                return BaseResponse.Fail("Kullanıcı odada değil");
+
+            if (!room.Votes.Any())
+                return BaseResponse.Fail("Henüz puan verilmemiş");
+
+            room.Votes.Clear();
+            room.WasRevealed = false;
 
             return BaseResponse.Success();
         }

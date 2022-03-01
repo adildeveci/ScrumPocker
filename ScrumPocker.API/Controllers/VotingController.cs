@@ -36,5 +36,25 @@ namespace ScrumPocker.API.Controllers
             var response = _votingService.Vote(request);
             return ActionResultBase(response);
         }
+
+        [HttpPost]
+        [Authorize(Roles = RoleCombination.LoggedUserRoles)]
+        public async Task<ActionResult<BaseResponse>> RevealCard([FromBody] RevealCardRequestDto request)
+        {
+            request.UserId = GetCurrentUserId();
+
+            var response = _votingService.RevealCard(request);
+            return ActionResultBase(response);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = RoleCombination.LoggedUserRoles)]
+        public async Task<ActionResult<BaseResponse>> StartNewVoting([FromBody] StartNewVotingRequestDto request)
+        {
+            request.UserId = GetCurrentUserId();
+
+            var response = _votingService.StartNewVoting(request);
+            return ActionResultBase(response);
+        }
     }
 }

@@ -27,7 +27,8 @@ namespace ScrumPocker.Core.Models
         public string PasswordHash { get; set; }
         public string CreatedUserId { get; set; }
         public List<UserModel> Users { get; set; }
+        public bool WasRevealed { get; set; }//puanlar gosterildi mi bilgisi
         public List<VoteMoel> Votes { get; set; }
         public VotingDefinition VotingDefinition { get; set; }
-    }
+    } 
 }
