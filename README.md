@@ -148,20 +148,20 @@ This is an example of how to list things you need to use the software and how to
 ## Usage
 
 You can use postman for api call. Or you can send a request directly SwaggerUI.
-Firs create a ClientToken
+* Firs create a ClientToken
 ![image](https://user-images.githubusercontent.com/21089760/156886525-9faa0629-ff80-4750-8bf1-24bbc4bee300.png)
 
-Create an user token for room and other process with client token
+* Create an user token for room and other process with client token
 ![image](https://user-images.githubusercontent.com/21089760/156886744-30d6602a-c73d-4ce6-a3ff-810d67c836a6.png)
-Save user token with other request, and use it until expires
+* Save user token with other request, and use it until expires
 ![image](https://user-images.githubusercontent.com/21089760/156886676-7b02ec6c-72d9-4ff8-aacd-23fb1ec3702f.png)
-If user token was expired then you can generate a new user token with refresh token
+* If user token was expired then you can generate a new user token with refresh token
 ![image](https://user-images.githubusercontent.com/21089760/156886894-e653d50c-dcc1-47bc-8c28-08d01d2df370.png)
 
-You can create a room with an user token.
+* You can create a room with an user token.
 ![image](https://user-images.githubusercontent.com/21089760/156886985-693cb3a9-e921-4363-a245-2478a7a8abf3.png)
 
-Some method requires a user token. Some method working with client token. But you can call all method with user token.
+* Some method requires a user token. Some method working with client token. But you can call all method with user token.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
