@@ -82,7 +82,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
+![image](https://user-images.githubusercontent.com/21089760/156884874-9936e995-24db-48f7-a32a-35e6bb68213f.png)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -229,5 +229,4 @@ Project Link: [https://github.com/adildeveci/ScrumPocker](https://github.com/adi
 [license-shield]: https://img.shields.io/github/license/adildeveci/ScrumPocker?style=for-the-badge
 [license-url]: https://github.com/adildeveci/ScrumPocker/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://www.linkedin.com/in/adildeveci
-[product-screenshot]: images/screenshot.png
+[linkedin-url]: https://www.linkedin.com/in/adildeveci 
