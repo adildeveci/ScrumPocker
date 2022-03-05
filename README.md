@@ -84,6 +84,17 @@
 
 ![image](https://user-images.githubusercontent.com/21089760/156884874-9936e995-24db-48f7-a32a-35e6bb68213f.png)
 
+
+This API project build for a real time scrum poker application.
+
+* You can create a user
+* You can use without registration
+* You can list the rooms
+* You can join the room
+* You can create a room
+* You can rate
+* You can see the room detail
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
