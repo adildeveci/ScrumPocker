@@ -11,7 +11,8 @@ namespace ScrumPocker.Services
     public interface IRoomService
     {
         BaseResponse<RoomSummaryDto> CreateRoom(CreateRoomDto request);
-        BaseResponse<List<RoomSummaryDto>> GetRooms();
+        BaseResponse<List<RoomSummaryDto>> GetRooms();//TODO: filter for GetRooms
+        BaseResponse<RoomDetailDto> GetRoomDetail(RoomDetailRequestDto request);
         BaseResponse JoinRoom(JoinRoomDto request);
         BaseResponse LeaveRoom(LeaveRoomDto request);
         BaseResponse DeleteRoom(DeleteRoomDto request);
@@ -41,11 +42,40 @@ namespace ScrumPocker.Services
             var result = ObjectMapper.Mapper.Map<List<RoomSummaryDto>>(rooms);
             return BaseResponse<List<RoomSummaryDto>>.Success(result);
         }
+        public BaseResponse<RoomDetailDto> GetRoomDetail(RoomDetailRequestDto request)
+        {
+            var user = StaticDbContext.Users.FirstOrDefault(x => x.Id == request.UserId);
+            if (user == null)
+                return BaseResponse<RoomDetailDto>.Fail("Kullanıcı bulunamadı", 404);
+
+            var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Id == request.RoomId);
+            if (room == null)
+                return BaseResponse<RoomDetailDto>.Fail("Oda bulunamadı", 404);
+
+            if (!room.Users.Any(x => x.Id == user.Id))
+                return BaseResponse<RoomDetailDto>.Fail("Kullanıcı odada değil");
+
+            var roomDetail = ObjectMapper.Mapper.Map<RoomDetailDto>(room);
+            roomDetail.UserAndVotes= (
+                                            from u in room.Users
+                                            join v in room.Votes on u.Id equals v.UserId into vt
+                                            from v in vt.DefaultIfEmpty()
+                                            select new UserAndVoteDto
+                                            {
+                                                Id = u.Id,
+                                                Name = u.Name,
+                                                SurName = u.SurName,
+                                                VoteValue = v?.Value//nullable
+                                            }
+                                            ).ToList();
+
+            return BaseResponse<RoomDetailDto>.Success(roomDetail);
+        }
         public BaseResponse JoinRoom(JoinRoomDto request)
         {
             var user = StaticDbContext.Users.FirstOrDefault(x => x.Id == request.UserId);
             if (user == null)
-                return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
+                return BaseResponse.Fail("Kullanıcı bulunamadı", 404);
 
             var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Id == request.RoomId);
             if (room == null)
@@ -64,7 +94,7 @@ namespace ScrumPocker.Services
         {
             var user = StaticDbContext.Users.FirstOrDefault(x => x.Id == request.UserId);
             if (user == null)
-                return BaseResponse<Room>.Fail("Kullanıcı bulunamadı", 404);
+                return BaseResponse.Fail("Kullanıcı bulunamadı", 404);
 
             var room = StaticDbContext.Rooms.FirstOrDefault(x => x.Id == request.RoomId);
             if (room == null)

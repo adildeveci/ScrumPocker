@@ -1,6 +1,6 @@
 ﻿namespace ScrumPocker.Core.Models
 {
-    public class VoteMoel
+    public class VoteModel
     { 
         //public string Id { get; set; }
         public string RoomId { get; set; }

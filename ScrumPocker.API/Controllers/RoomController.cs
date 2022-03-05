@@ -21,9 +21,18 @@ namespace ScrumPocker.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<BaseResponse<List<RoomSummaryDto>>>> GetRooms()
+        public async Task<ActionResult<BaseResponse<List<RoomSummaryDto>>>> GetRooms()//TODO:filtre uygulanabilir
         {
             var response = _roomService.GetRooms();
+            return ActionResultBase(response);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<BaseResponse<RoomDetailDto>>> GetRoomDetail(RoomDetailRequestDto request)
+        {
+            request.UserId = GetCurrentUserId();
+
+            var response = _roomService.GetRoomDetail(request);
             return ActionResultBase(response);
         }
 

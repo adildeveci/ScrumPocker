@@ -67,7 +67,7 @@ namespace ScrumPocker.Services
             else
             {
                 //insert
-                var model = ObjectMapper.Mapper.Map<VoteMoel>(request);
+                var model = ObjectMapper.Mapper.Map<VoteModel>(request);
                 room.Votes.Add(model);
             } 
 

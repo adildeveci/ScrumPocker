@@ -8,7 +8,7 @@ namespace ScrumPocker.Core.Models
         public Room()
         {
             Users = new List<UserModel>();
-            Votes = new List<VoteMoel>();
+            Votes = new List<VoteModel>();
             Id = Guid.NewGuid().ToString();
             CreatedDate = DateTime.Now;
         } 
@@ -26,9 +26,9 @@ namespace ScrumPocker.Core.Models
         public bool IsPublic { get; set; }
         public string PasswordHash { get; set; }
         public string CreatedUserId { get; set; }
-        public List<UserModel> Users { get; set; }
         public bool WasRevealed { get; set; }//puanlar gosterildi mi bilgisi
-        public List<VoteMoel> Votes { get; set; }
+        public List<UserModel> Users { get; set; }
+        public List<VoteModel> Votes { get; set; }
         public VotingDefinition VotingDefinition { get; set; }
     } 
 }
