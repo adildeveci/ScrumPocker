@@ -103,7 +103,7 @@ This API project build for a real time scrum poker application.
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* [.net core 5](https://docs.microsoft.com/tr-tr/aspnet/core/tutorials/first-web-api?view=aspnetcore-5.0&tabs=visual-studio)
+* [.net core 6](https://docs.microsoft.com/tr-tr/aspnet/core/tutorials/first-web-api?view=aspnetcore-6.0&tabs=visual-studio)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
