@@ -11,14 +11,14 @@ namespace ScrumPocker.Core.Models.BaseResponse
         public BaseResponse(BaseResponse baseResponse)
         {
             this.Error = baseResponse.Error;
-            this.IsSuccess = baseResponse.IsSuccess;
+            this.IsError = baseResponse.IsError;
             this.StatusCode = baseResponse.StatusCode;
         }
 
         #region Preperties
         [JsonIgnore]//Response Body de gorunmesin
         public int StatusCode { get; protected set; }
-        public bool IsSuccess { get; set; }
+        public bool IsError { get; set; }
         public ErrorDto Error { get; private set; }
 
         #endregion
@@ -28,7 +28,7 @@ namespace ScrumPocker.Core.Models.BaseResponse
             return new BaseResponse
             {
                 StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status200OK,
-                IsSuccess = true,
+                IsError = false,
             };
         }
 
@@ -37,7 +37,7 @@ namespace ScrumPocker.Core.Models.BaseResponse
             return new BaseResponse
             {
                 StatusCode = statusCode,
-                IsSuccess = true
+                IsError = false
             };
         }
 
@@ -48,7 +48,7 @@ namespace ScrumPocker.Core.Models.BaseResponse
             return new BaseResponse
             {
                 Error = new ErrorDto(errorMessage),
-                IsSuccess = false,
+                IsError = true,
                 StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest,
             };
         }
@@ -57,7 +57,7 @@ namespace ScrumPocker.Core.Models.BaseResponse
             return new BaseResponse
             {
                 Error = new ErrorDto(errorMessage),
-                IsSuccess = false,
+                IsError = true,
                 StatusCode = statusCode,
             };
         }
@@ -67,7 +67,7 @@ namespace ScrumPocker.Core.Models.BaseResponse
             {
                 Error = errorDto,
                 StatusCode = statusCode,
-                IsSuccess = false
+                IsError = true
             };
         }
 
@@ -84,7 +84,7 @@ namespace ScrumPocker.Core.Models.BaseResponse
         {
 
         }
-        public T Message { get; private set; }
+        public T Result { get; private set; }
 
         #region Methods
 
@@ -94,9 +94,9 @@ namespace ScrumPocker.Core.Models.BaseResponse
         {
             return new BaseResponse<T>
             {
-                Message = data,
+                Result = data,
                 StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status200OK,
-                IsSuccess = true
+                IsError = false
             };
         }
 
@@ -104,9 +104,9 @@ namespace ScrumPocker.Core.Models.BaseResponse
         {
             return new BaseResponse<T>
             {
-                Message = data,
+                Result = data,
                 StatusCode = statusCode,
-                IsSuccess = true
+                IsError = false
             };
         }
 
